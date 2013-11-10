@@ -1,0 +1,48 @@
+dev tun
+
+#dev-node /lib/udev/devices/net/tun
+#dev /lib/udev/devices/net/tun
+port 1194
+proto tcp-server
+ca /etc/openvpn/keys/ca.crt
+cert /etc/openvpn/keys/server.crt
+key /etc/openvpn/keys/server.key #secret file
+dh /etc/openvpn/keys/dh1024.pem
+
+local {{ openvpn.address }} 
+server 172.17.1.0 255.255.255.0
+#push "route 172.17.1.1"
+#push "route-gateway 172.17.1.1"
+#push "route-gateway 217.78.4.36"
+# just use openDNS for ease
+#push "dhcp-option DNS 172.17.1.1"
+#server 10.0.0.1 255.255.255.0
+ifconfig-pool-persist ipp.txt
+
+#client-to-client
+
+#keepalive
+keepalive 10 120
+
+#more cryptographic cipher options
+cipher AES-256-CBC
+
+#compression
+comp-lzo
+
+#openvpn priv after init.
+user nobody
+group nogroup
+
+persist-key
+persist-tun
+
+#This is the status log file for openvpn
+status /var/log/openvpn-status.log
+log /var/log/openvpn.log
+
+verb 3
+#Mute 20
+
+#TODO config better DNS
+push "dhcp-option DNS 8.8.8.8"

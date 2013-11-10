@@ -1,0 +1,31 @@
+---
+
+- name: Install openvpn packages
+  apt: 	pkg=openvpn state=installed 
+  tags:	openvpn
+
+- name:	openvpn config
+  template:	src=server.conf.j2 dest=/etc/openvpn/server.conf owner=root group=root
+  notify:
+    - restart openvpn
+  tags: openvpn
+
+- name: load tun device
+  command: /usr/sbin/modprobe tun
+
+- name: create the log file
+  command: touch /var/log/openvpn.log
+
+- name: configure firewall, allow traffic on port 1194
+  command: firewall-cmd --permanent --add-port=1194/tcp
+
+- name: configure firewall, allow traffic on port 1194
+  command: firewall-cmd --permanent --add-port=1194/udp
+
+- name: reload firewall configuration
+  command: firewall-cmd --reload
+
+- name: install certs
+  copy src=server.crt dest=/etc/openvpn
+  copy src=server.key dest=/etc/openvpn
+  tags: openvpn
