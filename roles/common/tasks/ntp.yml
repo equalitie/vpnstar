@@ -1,0 +1,10 @@
+- name: Install ntp
+  apt: pkg=ntp state=installed
+
+- name: Configure ntp
+  copy: src=ntp.conf dest=/etc/ntp.conf user=root group=root
+  notify:
+    - restart ntp
+
+- name: Ensure ntpd is running and enabled
+  service: name=ntp state=running enabled=yes

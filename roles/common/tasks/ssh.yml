@@ -1,0 +1,2 @@
+- name: Install SSHd config
+  copy: src=sshd_config dest=/etc/ssh/sshd_config group=root owner=root

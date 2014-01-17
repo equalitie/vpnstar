@@ -1,0 +1,20 @@
+- name: Install security-related packages
+  apt: pkg=$item state=installed
+  with_items:
+        - rkhunter
+        - fail2ban
+        - lynis
+
+- name: Install day-to-day packages
+  apt: pkg=$item state=installed
+  with_items:
+        - sudo
+        - emacs23-nox
+        - ntp
+        - locate
+        - iotop
+        - ifstat
+        - tmux
+
+- include: ntp.yml tags=ntp
+#-include: ssh.yml tags=ssh
