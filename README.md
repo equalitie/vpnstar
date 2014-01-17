@@ -1,4 +1,5 @@
-ansible
+vpnpair
 =======
 
-ansible cookbooks
+ansible recipe for two VPN servers offering a shared internal network along with external connectivity.
+
