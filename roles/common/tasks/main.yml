@@ -1,9 +1,14 @@
+#Security stuff
 - name: Install security-related packages
   apt: pkg=$item state=installed
   with_items:
         - rkhunter
         - fail2ban
         - lynis
+
+- sysctl: name=fs.suid_dumpable value=0 state=present
+
+#End Security stuff
 
 - name: Install day-to-day packages
   apt: pkg=$item state=installed
