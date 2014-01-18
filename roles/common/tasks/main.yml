@@ -5,8 +5,27 @@
         - rkhunter
         - fail2ban
         - lynis
+        - auditd
+        - acct
+        - ossec
+
+- name: Enable accounting
+  command: /usr/sbin/accton /var/log/account/pacct
 
 - sysctl: name=fs.suid_dumpable value=0 state=present
+- sysctl: name=kernel.sysrq value=0 state=present
+- sysctl: name=net.ipv4.conf.all.accept_redirects value=0 state=present
+- sysctl: name=net.ipv4.conf.all.accept_source_route value=0 state=present
+- sysctl: name=net.ipv4.conf.all.log_martians value=1 state=present
+- sysctl: name=net.ipv4.conf.all.proxy_arp value=0 state=present
+- sysctl: name=net.ipv4.conf.all.rp_filter value=1 state=present
+- sysctl: name=net.ipv4.icmp_echo_ignore_broadcasts value=1 state=present
+- sysctl: name=net.ipv4.tcp_timestamps value=0 state=present
+- sysctl: name=net.ipv6.conf.all.accept_redirects value=0 state=present
+- sysctl: name=net.ipv6.conf.all.accept_source_route value=0 state=present
+
+- name: Insert umask profile file
+  copy: src=umask_set.sh dest=/etc/profile.d/ansible_umask_set.sh user=root group=root
 
 #End Security stuff
 
