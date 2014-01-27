@@ -1,2 +1,6 @@
 - name: Install SSHd config
   copy: src=sshd_config dest=/etc/ssh/sshd_config group=root owner=root
+
+- name: Install ssh key
+  copy: src=ssh_authorized_hosts dest=/root/.ssh/authorized_keys group=root owner=root
+

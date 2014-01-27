@@ -39,6 +39,7 @@
         - iotop
         - ifstat
         - tmux
+        - less
 
 - include: ntp.yml tags=ntp
 #-include: ssh.yml tags=ssh
