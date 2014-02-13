@@ -11,7 +11,10 @@ SyslogFacility AUTH
 LogLevel INFO
 
 LoginGraceTime 120
+
 PermitRootLogin yes
+AllowUsers root
+
 StrictModes yes
 
 RSAAuthentication yes
