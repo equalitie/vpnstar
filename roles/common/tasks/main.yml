@@ -27,6 +27,13 @@
 - name: Insert umask profile file
   copy: src=umask_set.sh dest=/etc/profile.d/ansible_umask_set.sh user=root group=root
 
+#TODO create template
+#- name: add /etc/apt/apt.conf.d/50unattended-upgrades
+#  template: >
+#    src=apt-unattended-upgrades
+#    dest=/etc/apt/apt.conf.d/50unattended-upgrades
+#    owner=root group=root mode=0644
+
 #End Security stuff
 
 - name: Install day-to-day packages
@@ -41,6 +48,12 @@
         - tmux
         - ufw
         - less
+        - bash-completion
+        - curl
+        - dnsutils
+        - htop
+        - iotop
+
 
 - include: ntp.yml tags=ntp
 #- include: ssh.yml tags=ssh

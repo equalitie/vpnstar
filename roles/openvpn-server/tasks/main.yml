@@ -1,7 +1,7 @@
 ---
 
 - name: Install openvpn packages
-  apt: 	pkg=openvpn state=installed 
+  apt: 	pkg=openvpn state=installed
   tags:	openvpn
 
 - name:	openvpn config
@@ -9,6 +9,8 @@
   notify:
     - restart openvpn
   tags: openvpn
+
+#TODO copy cerst
 
 - name: load tun device
   command: /usr/sbin/modprobe tun
@@ -29,3 +31,6 @@
   copy src=server.crt dest=/etc/openvpn
   copy src=server.key dest=/etc/openvpn
   tags: openvpn
+
+# enable ip forwarding for net access
+- sysctl: name=net.ipv4.ip_forward value=1 state=present
