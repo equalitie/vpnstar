@@ -1,0 +1,12 @@
+---
+
+- name: Install dnsmasq
+  apt:  pkg=dnsmasq state=installed
+  tags: dnsmasq
+
+- name: dnsmasq config
+  template: src=vpn.j2 dest=/etc/dnsmasq.d/vpn owner=root group=root
+  notify:
+    - restart dnsmasq
+  tags: dnsmasq
+
