@@ -1,0 +1,25 @@
+nicelevel = 19
+
+[gpg]
+
+password = {{ gpg_password }}
+sign = yes
+encryptkey = {{ gpg_keyid }}
+
+[source]
+
+include = /var/spool/cron/crontabs
+include = /var/backups
+include = /etc
+include = /root
+include = /home
+include = /var/lib/dpkg/status
+include = /var/lib/dpkg/status-old
+
+[dest]
+
+incremental = yes
+sshoptions = -i /root/.ssh/id_rsa.backup
+destdir = /home/backups/backups
+desthost = {{ backup_to }}
+destuser = backups
