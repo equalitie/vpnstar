@@ -4,8 +4,8 @@
   apt: 	pkg=openvpn state=installed
   tags:	openvpn
 
-- name:	openvpn config
-  template:	src=server.conf.j2 dest=/etc/openvpn/server.conf owner=root group=root
+- name:	openvpn external config
+  template:	src=external.conf.j2 dest=/etc/openvpn/external.conf owner=root group=root
   notify:
     - restart openvpn
   tags: openvpn
@@ -15,17 +15,17 @@
 - name: load tun device
   command: /usr/sbin/modprobe tun
 
-- name: create the log file
-  command: touch /var/log/openvpn.log
-
 - name: configure firewall, allow traffic on port 1194
   command: firewall-cmd --permanent --add-port=1194/tcp
 
 - name: configure firewall, allow traffic on port 1194
   command: firewall-cmd --permanent --add-port=1194/udp
 
-- name: reload firewall configuration
-  command: firewall-cmd --reload
+- name: add net access rule
+  command: iptables -t nat -I POSTROUTING -s {{ external_net }}/24 -o eth0 -j MASQUERADE
+
+- name: add access to other networks on the VPN
+  command: route add -net {{ external_net }} netmask 255.255.255.0 gw {{ core_router }}
 
 - name: install certs
   copy src=server.crt dest=/etc/openvpn
