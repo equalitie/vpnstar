@@ -1,0 +1,17 @@
+---
+- name: backup pkgs
+  apt: pkg={{ item }} state=installed
+  tags: backup
+  with_items:
+    - backupninja
+    - duplicity
+
+- name: create backup user
+  tags: backup
+  user: backups
+
+- name: backupninja
+  template: src=templates/{{ item.name }}.j2 dest={{ item.dest }} owner=root group=root mode={{ item.mode }}
+  tags: backup
+  with_items:
+    - {name: etc-backup.d-10.dup, mode: 600, dest: /etc/backup.d/10.dup}
