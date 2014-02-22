@@ -1,0 +1,22 @@
+dev tun
+proto udp
+
+ifconfig 10.1.0.2 10.1.0.1
+
+remote {{ internal_server }} 1195
+nobind
+secret internal.key
+
+comp-lzo
+persist-key
+persist-tun
+
+keepalive 10 60
+ping-timer-rem
+
+verb 3
+
+#remote-cert-tls server
+#cipher aes-256-cbc
+
+#mute 20

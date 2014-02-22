@@ -5,3 +5,8 @@
     - common
 #    - openvpn-server
 #    - openvpn-client
+  vars:
+    gpg_keyid: DEADFEED
+    gpg_password: derpderpdummyvalue
+    core_router: 10.1.0.1
+    internal_server: mycorehost
