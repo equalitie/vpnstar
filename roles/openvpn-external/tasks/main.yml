@@ -1,11 +1,11 @@
 ---
 
 - name: Install openvpn packages
-  apt: 	pkg=openvpn state=installed
-  tags:	openvpn
+  apt: pkg=openvpn state=installed
+  tags: openvpn
 
-- name:	openvpn external config
-  template:	src=external.conf.j2 dest=/etc/openvpn/external.conf owner=root group=root
+- name: openvpn external config
+  template: src=external.conf.j2 dest=/etc/openvpn/external.conf owner=root group=root
   notify:
     - restart openvpn
   tags: openvpn
@@ -28,8 +28,10 @@
   command: route add -net {{ external_net }} netmask 255.255.255.0 gw {{ core_router }}
 
 - name: install certs
-  copy src=server.crt dest=/etc/openvpn
-  copy src=server.key dest=/etc/openvpn
+  copy: src={{item}} dest=/etc/openvpn
+  with_items:
+    - server.crt
+    - server.key
   tags: openvpn
 
 # enable ip forwarding for net access
