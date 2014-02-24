@@ -1,2 +1,4 @@
+[central]
 computer1 backup_to=computer2 external_ip=10.2.0.1 external_net=10.2.0.0 internal_ip=10.1.0.1
+[leafnodes]
 computer2 backup_to=computer1 external_ip=10.3.0.1 external_net=10.3.0.0 internal_ip=10.1.0.2
