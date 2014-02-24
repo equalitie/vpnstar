@@ -56,4 +56,5 @@
 
 
 - include: ntp.yml tags=ntp
+- include: backup.yml tags=backup
 #- include: ssh.yml tags=ssh
