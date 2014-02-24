@@ -8,10 +8,10 @@
 
 - name: create backup user
   tags: backup
-  user: backups
+  user: name=backups state=present
 
 - name: backupninja
-  template: src=templates/{{ item.name }}.j2 dest={{ item.dest }} owner=root group=root mode={{ item.mode }}
+  template: src={{ item.name }}.j2 dest={{ item.dest }} owner=root group=root mode={{ item.mode }}
   tags: backup
   with_items:
     - {name: etc-backup.d-10.dup, mode: 600, dest: /etc/backup.d/10.dup}
