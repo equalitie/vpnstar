@@ -1,0 +1,17 @@
+---
+
+- name: Install openvpn packages
+  apt: pkg=openvpn state=installed
+  tags: openvpn
+
+- name: load tun device
+  command: /usr/sbin/modprobe tun
+
+- name:	openvpn internal config
+  template: src=internal.conf.j2 dest=/etc/openvpn/internal.conf owner=root group=root
+  notify:
+    - restart openvpn
+  tags: openvpn
+
+- name: install cert
+  copy src=internal.key dest=/etc/openvpn
