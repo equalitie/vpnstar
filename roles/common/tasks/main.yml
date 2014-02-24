@@ -1,13 +1,13 @@
 #Security stuff
 - name: Install security-related packages
-  apt: pkg=$item state=installed
+  apt: pkg={{item}} state=installed
   with_items:
         - rkhunter
         - fail2ban
         - lynis
         - auditd
         - acct
-        - ossec
+        #- ossec
 
 - name: Enable accounting
   command: /usr/sbin/accton /var/log/account/pacct
@@ -37,7 +37,7 @@
 #End Security stuff
 
 - name: Install day-to-day packages
-  apt: pkg=$item state=installed
+  apt: pkg={{item}} state=installed
   with_items:
         - sudo
         - emacs23-nox
