@@ -15,3 +15,27 @@
   tags: backup
   with_items:
     - {name: etc-backup.d-10.dup, mode: 600, dest: /etc/backup.d/10.dup}
+
+- name: copy backup GPG key
+  copy: src=backup.gpg dest=/root/gnupg.import.gpg owner=root group=root mode=600
+  tags: backup
+
+- shell: gpg -K {{ gpg_keyid }}
+  register: key_installed
+
+- name: import GPG key
+  command: gpg --allow-secret-key-import --import /root/gnupg.import.gpg
+  when: key_installed|failed
+  tags: backup
+
+- name: create root's .ssh dir
+  file: path=/root/.ssh state=directory owner=root group=root mode=700
+
+- name: install backup private key
+  copy: src=id_rsa.backup dest=/root/.ssh owner=root group=root mode=600
+
+- name: create backup's .ssh dir
+  file: path=/home/backups/.ssh state=directory owner=backup group=backup mode=700
+
+- name: install backup public key
+  copy: src=id_rsa.backup.pub dest=/home/backups/.ssh/ owner=backup group=backup mode=600
