@@ -33,9 +33,12 @@
 
 - name: install backup private key
   copy: src=id_rsa.backup dest=/root/.ssh owner=root group=root mode=600
+- name: install backup public key
+  copy: src=id_rsa.backup.pub dest=/root/.ssh/ owner=root group=root mode=600
 
 - name: create backup's .ssh dir
-  file: path=/home/backups/.ssh state=directory owner=backup group=backup mode=700
+  file: path=/home/backups/.ssh state=directory owner=backups group=backups mode=700
 
-- name: install backup public key
-  copy: src=id_rsa.backup.pub dest=/home/backups/.ssh/ owner=backup group=backup mode=600
+- name: set up backup's authorized_keys
+  copy: src=id_rsa.backup.pub dest=/home/backups/.ssh/authorized_keys owner=backups group=backups mode=600
+
