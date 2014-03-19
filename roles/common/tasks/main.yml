@@ -27,13 +27,6 @@
 - name: Insert umask profile file
   copy: src=umask_set.sh dest=/etc/profile.d/ansible_umask_set.sh user=root group=root
 
-#TODO create template
-#- name: add /etc/apt/apt.conf.d/50unattended-upgrades
-#  template: >
-#    src=apt-unattended-upgrades
-#    dest=/etc/apt/apt.conf.d/50unattended-upgrades
-#    owner=root group=root mode=0644
-
 #End Security stuff
 
 - name: Install day-to-day packages
@@ -53,7 +46,11 @@
         - dnsutils
         - htop
         - iotop
+        - unattended-upgrades
+        - apt-listchanges
 
+- name: enable unattended upgrades
+  template: src=50unattended-upgrades.j2 dest=/etc/apt/apt.conf.d/50unattended-upgrades owner=root group=root mode=0644
 
 - include: ntp.yml tags=ntp
 - include: backup.yml tags=backup
