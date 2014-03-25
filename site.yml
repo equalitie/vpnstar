@@ -8,6 +8,7 @@
     gpg_password: derpderpdummyvalue
     core_router: 10.1.0.1
     internal_server: mycorehost
+    admin_email: nosmo@nosmo.me
 
 - hosts: central
   roles:
@@ -19,8 +20,9 @@
 - hosts: leafnodes
   roles:
     - dnsmasq
-    - openvpn-internal-server
+    - openvpn-internal-client
     - openvpn-external
   vars:
+    network_domain: vpnpair
     core_router: 10.1.0.1
     internal_server: mycorehost
