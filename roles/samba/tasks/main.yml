@@ -1,0 +1,11 @@
+---
+
+- name: Install samba
+  apt: pkg=samba state=installed
+  tags: samba
+
+- name: samba config
+  template: src=smb.conf.j2 dest=/etc/samba/smb.conf owner=root group=root
+  notify:
+    - restart samba
+  tags: samba
