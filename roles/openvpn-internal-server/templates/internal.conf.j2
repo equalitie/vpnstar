@@ -9,8 +9,13 @@ dev tun
 
 secret internal.key
 
-#TODO make the second IP here the IP of the client
+#TODO template the second IP address
 ifconfig {{ internal_ip }} 10.1.0.2
+
+{% for host in groups["leafnodes"] %}
+route {{ hostvars[host]["external_net"] }} 255.255.255.0
+{% endfor %}
+
 
 keepalive 10 120
 
