@@ -1,2 +1,9 @@
+domain={{ network_domain }}
+expand-hosts
+local=/{{ network_domain }}/
+
+host-record=remine,redmine.{{ network_domain }},{{ core_router }}
+host-record=files,files.{{ network_domain }},{{ core_router }}
+
 listen-address=127.0.0.1,{{ external_ip }}
 bind-interfaces
