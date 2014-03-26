@@ -28,8 +28,8 @@
 - name: install certs
   copy: src={{item}} dest=/etc/openvpn
   with_items:
-    - {{ inventory_hostname }}.crt
-    - {{ inventory_hostname }}.key
+    - "{{ inventory_hostname }}.crt"
+    - "{{ inventory_hostname }}.key"
   tags: openvpn
 
 # enable ip forwarding for net access
