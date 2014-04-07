@@ -1,0 +1,58 @@
+#redmine/instances/default/db/dbname     string  redmine
+#redmine/instances/default/mysql/admin-user      string  root
+#redmine/instances/default/mysql/admin-pass      {{mysql_root_pw}}
+#redmine/instances/default/mysql/app-user      string  root
+#redmine/instances/default/mysql/app-pass      {{mysql_root_pw}}
+
+# redmine  redmine/instances/default/dbconfig-install        boolean true
+# redmine redmine/instances/default/db/dbname selection redmine
+# redmine  redmine/instances/default/database-type           select  mysql
+# redmine  redmine/instances/default/mysql/admin-root        select  root
+# redmine  redmine/instances/default/mysql/admin-pass        select  {{mysql_root_pw}}
+# dbconfig-common    dbconfig-common/mysql/app-user          root
+# dbconfig-common    dbconfig-common/mysql/app-pass            {{mysql_root_pw}}
+
+
+redmine      redmine/instances/default/mysql/app-pass   password        {{redmine_db_pw}}
+#  username for redmine/instances/default:
+redmine     redmine/instances/default/db/app-user       string  redmine
+# Host running the  server for redmine/instances/default:
+redmine        redmine/instances/default/remote/newhost string  localhost
+#  storage directory for redmine/instances/default:
+redmine    redmine/instances/default/db/basepath        string
+redmine    redmine/notify-migration                     note
+redmine    redmine/old-instances                        string
+redmine    redmine/instances/default/upgrade-error      select  abort
+redmine    redmine/instances/default/mysql/changeconf   boolean false
+redmine    redmine/instances/default/missing-db-package-error   select  abort
+#  database name for redmine/instances/default:
+redmine     redmine/instances/default/db/dbname string  redmine
+# Do you want to purge the database for redmine/instances/default?
+redmine  redmine/instances/default/purge        boolean true
+redmine  redmine/current-instances              string  default
+# Host name of the  database server for redmine/instances/default:
+redmine     redmine/instances/default/remote/host       select  localhost
+# Default redmine language:
+redmine   redmine/default-language      select  ${defaultLocale}
+# Perform upgrade on database for redmine/instances/default with dbconfig-common?
+redmine   redmine/instances/default/dbconfig-upgrade        boolean     true
+redmine   redmine/instances/default/internal/reconfiguring  boolean     false
+# Do you want to back up the database for redmine/instances/default before upgrading?
+redmine  redmine/instances/default/upgrade-backup                   boolean     false
+# Connection method for PostgreSQL database of redmine/instances/default:
+redmine      redmine/instances/default/mysql/method     select  unix socket
+# Database type to be used by redmine/instances/default:
+redmine    redmine/instances/default/database-type      select  mysql
+redmine    redmine/instances/default/mysql/manualconf   note
+redmine    redmine/instances/default/mysql/authmethod-admin     select  ident
+# Connection method for MySQL database of redmine/instances/default:
+redmine      redmine/instances/default/mysql/admin-user string  root
+# Deconfigure database for redmine/instances/default with dbconfig-common?
+redmine       redmine/instances/default/dbconfig-remove   boolean
+# redmine- package required
+redmine    redmine/instances/default/remote/port        string
+redmine    redmine/instances/default/pgsql/authmethod-user      select  password
+# Configure database for redmine/instances/default with dbconfig-common?
+redmine     redmine/instances/default/dbconfig-install  boolean true
+# Reinstall database for redmine/instances/default?
+redmine     redmine/instances/default/dbconfig-reinstall        boolean true
