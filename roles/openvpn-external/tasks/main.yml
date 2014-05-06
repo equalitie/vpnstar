@@ -2,35 +2,47 @@
 
 - name: Install openvpn packages
   apt: pkg=openvpn state=installed
-  tags: openvpn
+  tags: openvpn-external
 
 - name: openvpn external config
   template: src=external.conf.j2 dest=/etc/openvpn/external.conf owner=root group=root
   notify:
     - restart openvpn
-  tags: openvpn
+  tags: openvpn-external
 
 - name: load tun device
   command: /usr/sbin/modprobe tun
+  tags: openvpn-external
 
 - name: configure firewall, allow traffic on port 1194
   command: firewall-cmd --permanent --add-port=1194/tcp
+  tags: openvpn-external
 
 - name: configure firewall, allow traffic on port 1194
   command: firewall-cmd --permanent --add-port=1194/udp
+  tags: openvpn-external
 
 - name: add net access rule
   command: iptables -t nat -I POSTROUTING -s {{ external_net }}/24 -o eth0 -j MASQUERADE
+  tags: openvpn-external
 
 - name: add access to other networks on the VPN
   command: route add -net {{ external_net }} netmask 255.255.255.0 gw {{ core_router }}
+  tags: openvpn-external
 
 - name: install certs
   copy: src={{item}} dest=/etc/openvpn
   with_items:
     - "{{ inventory_hostname }}.crt"
     - "{{ inventory_hostname }}.key"
-  tags: openvpn
+  tags: openvpn-external
+
+- name: install user certs
+  copy: src={{ item }} dest=/etc/openvpn/keys/ owner=root mode=600
+  tags: openvpn-external
+  with_fileglob:
+    - usercerts/*
 
 # enable ip forwarding for net access
 - sysctl: name=net.ipv4.ip_forward value=1 state=present
+  tags: openvpn-external
