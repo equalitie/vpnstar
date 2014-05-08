@@ -1,9 +1,9 @@
 vpnpair
 =======
 
-ansible recipe for two VPN servers offering a shared internal network along with external connectivity.
+ansible recipe for star-toplogy connected VPN servers offering a shared internal network along with external connectivity.
 
-Constantly in dev, not complete and not for use :)
+The internal server runs Redmine and Samba as demonstration services.
 
 requirements
 --------
