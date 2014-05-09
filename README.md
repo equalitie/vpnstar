@@ -1,4 +1,4 @@
-vpnpair
+vpnstar
 =======
 
 ansible recipe for star-toplogy connected VPN servers offering a shared internal network along with external connectivity.
