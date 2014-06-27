@@ -51,7 +51,23 @@
   tags: redmine
   template: src=ports.conf.j2 dest=/etc/apache2/ports.conf
   notify:
-    - restart_apache
+    - restart apache2
+
+- name: Install debconf selections to allow for non-interactive redmine config
+  template: src=redmine_debconf.j2 dest=/tmp/redmine_debconf
+  tags: redmine
+
+- name: Install redmine database configuration
+  template: src=redmine_database.yml.j2 dest=/etc/redmine/default/database.yml
+  tags: redmine
+
+- name: Set debconf selections for redmine
+  command: debconf-set-selections /tmp/redmine_debconf
+  tags: redmine
+
+- name: remove debconf files
+  file: dest=/tmp/redmine_debconf state=absent
+  tags: redmine
 
 # Need to specify params for unattended install
 - name: install redmine
@@ -63,6 +79,7 @@
     - redmine-mysql
   tags: redmine
 
+# may not be required
 - name: Create Redmine directory link
   file: path=/var/www/redmine src=/usr/share/redmine/public state=link
   tags: redmine
@@ -72,20 +89,21 @@
   tags: redmine
 
 - name: Install redmine apache config
-  template: src=redmine.apache.j2 dest=/etc/apache2/sites-available/redmine.conf
+  template: src=redmine.apache.j2 dest=/etc/apache2/sites-available/redmine
   tags: redmine
 
 - name: Make plugin assets directory
   file: path=/usr/share/plugin_assets state=directory owner=www-data group=www-data
   tags: redmine
-- name: Create Redmine plugin assets link
-  file: src=/var/cache/redmine/default/plugin_assets path=/usr/share/redmine/public/ state=link
-  tags: redmine
+
+#Debian is smart enough to do this itself
+#TODO add a register/when
+#- name: Create Redmine plugin assets link
+#  file: src=/var/cache/redmine/default/plugin_assets path=/usr/share/redmine/public/ state=link
+#  tags: redmine
 
 - name: enable redmine site
   command: /usr/sbin/a2ensite redmine
   tags: redmine
   notify:
-    - restart_apache
-
-
+    - restart apache2
