@@ -42,3 +42,6 @@
 
 - name: set up backup's authorized_keys
   copy: src=id_rsa.backup.pub dest=/home/backups/.ssh/authorized_keys owner=backups group=backups mode=600
+
+- name: Install gpg config
+  template: src=gpg.conf.j2 dest=/root/.gnupg/gpg.conf owner=root group=root mode=600

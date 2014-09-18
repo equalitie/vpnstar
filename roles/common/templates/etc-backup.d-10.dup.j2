@@ -15,12 +15,12 @@ include = /root
 include = /home
 include = /var/lib/dpkg/status
 include = /var/lib/dpkg/status-old
-exclude = /home/backup/
+exclude = /home/backups/
 
 [dest]
 
 incremental = yes
-sshoptions = -i /root/.ssh/id_rsa.backup
+sshoptions = -oIdentityFile=/root/.ssh/id_rsa.backup
 destdir = /home/backups/backups
 desthost = {{ backup_to }}
 destuser = backups
